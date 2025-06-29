@@ -2,6 +2,7 @@ qs link ---> https://leetcode.com/problems/minimize-the-maximum-edge-weight-of-g
 
 
 graph + binary search
+traversal using dfs
 
 
   class Solution {
