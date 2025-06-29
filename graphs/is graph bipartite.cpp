@@ -37,3 +37,37 @@ public:
           return true;
             }
 };
+
+
+dfs --> 
+    
+class Solution {
+    bool dfs(vector<vector<int>>& graph,int colour[],int node){
+            for(auto it : graph[node]){
+                if(colour[it] == -1){
+                    colour[it] = !colour[node];
+                   if(dfs(graph,colour,it)==false) return false;
+                }
+                else if(colour[it] == colour[node]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        int colour[n];
+        for(int i =0;i<n;i++){
+           colour[i] = -1;
+        }
+        for(int i=0;i<n;i++){
+            if(colour[i]==-1){
+                colour[i]=0;
+                if(dfs(graph,colour,i) == false) return false;
+            }
+        } 
+          return true;
+            }
+};
