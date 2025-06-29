@@ -1,7 +1,7 @@
 
 qs link --> https://leetcode.com/problems/course-schedule/description/
 
-cycle detection
+cycle detection  using dfs
   
 class Solution {
     bool dfs(int node, vector<vector<int>>& adj, vector<int>& vis, vector<int>& pathvis) {
