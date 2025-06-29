@@ -1,6 +1,6 @@
 qs link  ----> https://leetcode.com/problems/is-graph-bipartite/
 
-graph travesal
+graph travesal  bfs 
 
 class Solution {
     bool check(vector<vector<int>>& graph,int colour[],int node){
