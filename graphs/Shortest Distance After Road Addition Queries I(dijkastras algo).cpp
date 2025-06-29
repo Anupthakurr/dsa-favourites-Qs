@@ -1,6 +1,6 @@
 qs link ---->  https://leetcode.com/problems/shortest-distance-after-road-addition-queries-i/
 
-
+dijkastras algo application
 
 class Solution {
 public:
