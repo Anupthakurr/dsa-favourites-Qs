@@ -112,10 +112,51 @@ void deleteNode(int position, Node* & head) {
     }
 }
 
-int main() {
+   int main()  {
+    //created a new node
+    Node* node1 = new Node(10);
+    //cout << node1 -> data << endl;
+   // cout << node1 -> next << endl;
     
+    //head pointed to node1
+    Node* head = node1; 
+    Node* tail = node1;
+    //print(head);
+
+    insertAtTail(tail, 12);
+
+    //print(head);
     
+    insertAtTail(tail, 15);
+    //print(head);
+
+    insertAtPosition(tail,head, 4, 22);
+    //print(head);    
+
+    //cout << "head " << head -> data << endl;
+    //cout << "tail " << tail -> data << endl;
+
+    //deleteNode(4, head);
+    
+
+    tail -> next = head ->next;
+
+    cout << "head " << head -> data << endl;
+    cout << "tail " << tail -> data << endl;
+    //print(head);
+
    
+
+    /*
+    print(head);
+
+    if(isCircularList(head)) {
+        cout << " Linked List is Circular in nature" << endl;
+    }
+    else{
+        cout << "Linked List is not Circular " << endl;
+    }
+    */
 
 
     return 0;
