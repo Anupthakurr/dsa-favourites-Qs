@@ -1,5 +1,6 @@
 qs link --->  https://leetcode.com/problems/find-the-count-of-numbers-which-are-not-special/description/
 
+application with some modification
 
 
 class Solution {
