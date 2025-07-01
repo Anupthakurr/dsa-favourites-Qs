@@ -11,9 +11,9 @@ public:
         vector<bool>prime(temp1+1,true);
         prime[0]=prime[1]=false;
         for(int i=2;i<=temp1;i++){
-            if(i*i<l || i*i>r){
-                prime[i]=false;
-            }
+            // if(i*i<l || i*i>r){
+            //     prime[i]=false;   ---->extra condition according to qs
+            // } 
             if(prime[i]){
                 cnt++;
             }
