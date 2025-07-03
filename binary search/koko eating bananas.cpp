@@ -1,3 +1,8 @@
+qs link -----> https://leetcode.com/problems/koko-eating-bananas/
+
+binary search on answer    
+
+
 class Solution {
     bool check(int mid,vector<int>& piles, int h){
          long long sum = 0;
