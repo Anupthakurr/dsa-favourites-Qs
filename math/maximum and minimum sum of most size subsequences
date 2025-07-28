@@ -1,0 +1,48 @@
+qs link ---->   https://leetcode.com/problems/maximum-and-minimum-sums-of-at-most-size-k-subsequences/
+
+
+
+#define ll long long
+const int mod = 1e9 + 7;
+const int MAX = 1e5 + 5;
+
+class Solution {
+public:
+    vector<vector<ll>> comb;
+
+    void precompute(int n, int k) {
+        comb.assign(n + 1, vector<ll>(k + 1, 0));
+        for (int i = 0; i <= n; ++i) {
+            comb[i][0] = 1;
+            for (int j = 1; j <= k && j <= i; ++j) {
+                comb[i][j] = (comb[i - 1][j] + comb[i - 1][j - 1]) % mod;
+            }
+        }
+    }
+
+    int minMaxSums(vector<int>& nums, int k) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        precompute(n, k);
+
+        ll sum = 0;
+
+        for (int sz = 1; sz <= k; ++sz) {
+            for (int i = 0; i < n; ++i) {
+                // nums[i] as min in a subsequence of length sz
+                int bigger_right = n - i - 1;
+                if (bigger_right >= sz - 1) {
+                    sum = (sum + comb[bigger_right][sz - 1] * nums[i]) % mod;
+                }
+
+                // nums[i] as max in a subsequence of length sz
+                int smaller_left = i;
+                if (smaller_left >= sz - 1) {
+                    sum = (sum + comb[smaller_left][sz - 1] * nums[i]) % mod;
+                }
+            }
+        }
+
+        return sum;
+    }
+};
