@@ -1,6 +1,6 @@
 qs link ---->   https://leetcode.com/problems/maximum-and-minimum-sums-of-at-most-size-k-subsequences/
 
-
+// recursion will give tle  therefore we solved it by combinatorics
 
 #define ll long long
 const int mod = 1e9 + 7;
