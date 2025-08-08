@@ -1,37 +1,68 @@
-qs link ---> https://leetcode.com/problems/sum-of-subarray-ranges/
-
-
 class Solution {
 public:
     long long subArrayRanges(vector<int>& nums) {
         int n = nums.size();
-        long long res = 0;
-
-        // Sum of max contributions
+        vector<int> ple(n), nle(n), pge(n), nge(n);
         stack<int> st;
-        for (int i = 0; i <= n; ++i) {
-            while (!st.empty() && (i == n || nums[st.top()] < nums[i])) {
-                int mid = st.top(); st.pop();
-                int left = st.empty() ? -1 : st.top();
-                int right = i;
-                res += 1LL * nums[mid] * (mid - left) * (right - mid);
+
+        // Previous Less Element (strictly less)
+        for (int i = 0; i < n; ++i) {
+            while (!st.empty() && nums[st.top()] >= nums[i]) {
+                st.pop();
             }
+            ple[i] = st.empty() ? -1 : st.top();
             st.push(i);
         }
 
-        // Subtract min contributions
-        while (!st.empty()) st.pop(); // clear stack
+        // Clear stack for reuse
+        while (!st.empty()) st.pop();
 
-        for (int i = 0; i <= n; ++i) {
-            while (!st.empty() && (i == n || nums[st.top()] > nums[i])) {
-                int mid = st.top(); st.pop();
-                int left = st.empty() ? -1 : st.top();
-                int right = i;
-                res -= 1LL * nums[mid] * (mid - left) * (right - mid);
+        // Next Less Element (strictly less)
+        for (int i = n - 1; i >= 0; --i) {
+            while (!st.empty() && nums[st.top()] > nums[i]) {
+                st.pop();
             }
+            nle[i] = st.empty() ? n : st.top();
             st.push(i);
         }
 
-        return res;
+        // Clear stack again
+        while (!st.empty()) st.pop();
+
+        // Previous Greater Element (strictly greater)
+        for (int i = 0; i < n; ++i) {
+            while (!st.empty() && nums[st.top()] <= nums[i]) {
+                st.pop();
+            }
+            pge[i] = st.empty() ? -1 : st.top();
+            st.push(i);
+        }
+
+        // Clear stack again
+        while (!st.empty()) st.pop();
+
+        // Next Greater Element (strictly greater)
+        for (int i = n - 1; i >= 0; --i) {
+            while (!st.empty() && nums[st.top()] < nums[i]) {
+                st.pop();
+            }
+            nge[i] = st.empty() ? n : st.top();
+            st.push(i);
+        }
+
+        // Now calculate contributions
+        long long minSum = 0, maxSum = 0;
+
+        for (int i = 0; i < n; ++i) {
+            long long leftMin = i - ple[i];
+            long long rightMin = nle[i] - i;
+            minSum += (long long)nums[i] * leftMin * rightMin;
+
+            long long leftMax = i - pge[i];
+            long long rightMax = nge[i] - i;
+            maxSum += (long long)nums[i] * leftMax * rightMax;
+        }
+
+        return maxSum - minSum;
     }
 };
