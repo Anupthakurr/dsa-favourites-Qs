@@ -1,0 +1,55 @@
+qs link -------------->   https://leetcode.com/problems/trapping-rain-water/description/
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        if (n == 0) return 0;
+
+        // prefix sum of heights
+        vector<long long> prefix(n+1, 0);
+        for (int i = 0; i < n; i++) {
+            prefix[i+1] = prefix[i] + height[i];
+        }
+
+        // next greater element to the right
+        vector<int> nextGreater(n, -1);
+        stack<int> st;
+        for (int i = n-1; i >= 0; i--) {
+            while (!st.empty() && height[st.top()] <= height[i]) st.pop();
+            if (!st.empty()) nextGreater[i] = st.top();
+            st.push(i);
+        }
+
+        long long ans = 0;
+        int i = 0;
+        while (i < n) {
+            int j = nextGreater[i];
+            if (j == -1) break; // no greater to the right, stop
+            long long width = j - i - 1;
+            long long minHeight = min(height[i], height[j]);
+            long long total = minHeight * width;
+            long long blocks = prefix[j] - prefix[i+1];
+            ans += max(0LL, total - blocks);
+            i = j;
+        }
+
+        // from right side (for cases with no greater on the right)
+        int k = n-1;
+        while (k >= 0) {
+            int j = -1;
+            for (int m = k-1; m >= 0; m--) {
+                if (height[m] >= height[k]) { j = m; break; }
+            }
+            if (j == -1) break;
+            long long width = k - j - 1;
+            long long minHeight = min(height[j], height[k]);
+            long long total = minHeight * width;
+            long long blocks = prefix[k] - prefix[j+1];
+            ans += max(0LL, total - blocks);
+            k = j;
+        }
+
+        return ans;
+    }
+};
