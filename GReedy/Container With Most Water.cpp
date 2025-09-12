@@ -1,5 +1,30 @@
 qs link -----------> https://leetcode.com/problems/container-with-most-water/
 
+// two pointer approach
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int m = height.size();
+        int i=0;
+        int j=m-1;
+        int maxiwater = 0;
+        while(i<j){
+            int b = j - i;
+            int h = min(height[i],height[j]);
+            int area = b*h;
+            maxiwater = max(maxiwater,area);
+            if(height[i]>height[j]){
+                j--;
+            }else {
+                i++;
+            }
+        }
+        return maxiwater;
+    }
+};
+
+// 2nd approach binary search approach 
+    
 class Solution {
 public:
     int maxArea(vector<int>& height) {
