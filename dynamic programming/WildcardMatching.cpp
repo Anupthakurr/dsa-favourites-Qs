@@ -39,3 +39,47 @@ public:
         return solve(n - 1, m - 1, s, p, dp);
     }
 };
+
+// Greddy approach 
+ // two pointer better time complexity 
+ class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int n = s.size(), m = p.size();
+        int i = 0, j = 0;
+        int lastStar = -1, matchAfterStar = 0;
+
+        // iterate through string s
+        while (i < n) {
+            // direct match or '?'
+            if (j < m && (p[j] == s[i] || p[j] == '?')) {
+                i++;
+                j++;
+            }
+            // if we see a '*', mark its position and move pattern pointer
+            else if (j < m && p[j] == '*') {
+                lastStar = j;
+                matchAfterStar = i;
+                j++;
+            }
+            // mismatch: if we saw a star before, backtrack pattern
+            else if (lastStar != -1) {
+                j = lastStar + 1;
+                matchAfterStar++;
+                i = matchAfterStar;
+            }
+            // otherwise fail
+            else {
+                return false;
+            }
+        }
+
+        // remaining pattern chars must all be '*'
+        while (j < m && p[j] == '*') j++;
+
+        return j == m;
+    }
+};
+
+
+
