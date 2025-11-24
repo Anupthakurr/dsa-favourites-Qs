@@ -1,4 +1,50 @@
-qs link --->  //
+qs link --->  https://www.geeksforgeeks.org/problems/count-palindromic-subsequences/1
+
+
+//  my solution
+class Solution {
+  public:
+    /*You are required to complete below method */
+    long long int solve(int i, int j,string &s,vector<vector<int>> &dp){
+        
+        int mod = 1000000007;
+        // base case 
+        if(i>j){
+            return 0;
+        }
+        if(i == j){
+            return 1;
+        }
+         if(dp[i][j] != -1){
+             return dp[i][j];
+         }
+       
+        int take1 = 0;
+        int take2 = 0;
+        int take3 = 0;
+        if(s[i] == s[j]){
+            take1 = 1 + solve(i+1,j-1,s,dp);
+            take2 = solve(i,j-1,s,dp);
+            take3 = solve(i+1,j,s,dp)-solve(i+1,j-1,s,dp);
+        }
+        else{
+         take2 = solve(i,j-1,s,dp);
+         take3 =  solve(i+1,j,s,dp) - solve(i+1,j-1,s,dp);
+         
+        }
+        
+        return dp[i][j] =  take1 + take2 + take3;
+        
+    }
+    
+    long long int  countPS(string str) {
+          
+          int n=str.length();
+          vector<vector<int>> dp(n,vector<int>(n,-1));
+          return solve(0,n-1,str,dp);
+    }
+    
+};
 
 // solution from youtube pepcoding
   
