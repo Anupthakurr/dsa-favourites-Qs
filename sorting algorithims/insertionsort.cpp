@@ -17,6 +17,34 @@ void insertionSort(int arr[], int n) {
     }
 }
 
+//
+
+code using swap function
+
+#include <iostream>
+#include <algorithm>   // for swap()
+
+using namespace std;
+
+void insertionSort(int arr[], int n) {
+
+    for (int i = 1; i < n; i++) {
+
+        int j = i;
+
+        // Swap elements until correct position
+        while (j > 0 && arr[j] < arr[j - 1]) {
+
+            swap(arr[j], arr[j - 1]);
+
+            j--;
+        }
+    }
+}
+
+
+
+
 Start with the second element (consider first element as sorted)
 
 Pick the next element (key) from the unsorted portion
