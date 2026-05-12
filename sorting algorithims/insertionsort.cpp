@@ -1,17 +1,18 @@
-
-#include<vector>
+#include <iostream>
 using namespace std;
-void selectionSort(vector<int>& arr, int n)
-{   
-    for(int i = 0; i < n-1; i++ ) {
-        int minIndex = i;
-        
-        for(int j = i+1; j<n; j++) {
-            
-            if(arr[j] < arr[minIndex]) 
-                minIndex = j;
-            
+
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        // Move elements greater than key
+        // one position ahead
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
         }
-        swap(arr[minIndex], arr[i]);
+
+        arr[j + 1] = key;
     }
 }
