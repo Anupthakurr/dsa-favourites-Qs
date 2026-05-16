@@ -26,18 +26,18 @@ bool hasCycle(int n, vector<int> adj[]) {
 //  in directed graph
 bool dfs(int node, vector<int> adj[], vector<bool>& visited, vector<bool>& inStack) {
     visited[node] = true;
-    inStack[node] = true;
+    inpath[node] = true;
 
     for (int neigh : adj[node]) {
         if (!visited[neigh]) {
             if (dfs(neigh, adj, visited, inStack)) return true;
         } 
-        else if (inStack[neigh]) {
+        else if (inpath[neigh]) {
             return true; // back edge → cycle
         }
     }
 
-    inStack[node] = false; // backtrack
+    inpath[node] = false; // backtrack
     return false;
 }
 
