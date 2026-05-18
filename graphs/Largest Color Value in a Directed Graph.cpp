@@ -1,6 +1,91 @@
 qs link ---->  https://leetcode.com/problems/largest-color-value-in-a-directed-graph/
 
 
+// brute  force solution  dfs + backtracking
+
+    class Solution {
+public:
+
+    bool hasCycle(int node,
+                  vector<vector<int>>& adj,
+                  vector<int>& vis,
+                  vector<int>& pathVis) {
+
+        vis[node] = 1;
+        pathVis[node] = 1;
+
+        for (int nei : adj[node]) {
+
+            if (!vis[nei]) {
+                if (hasCycle(nei, adj, vis, pathVis))
+                    return true;
+            }
+            else if (pathVis[nei]) {
+                return true;
+            }
+        }
+
+        pathVis[node] = 0;
+        return false;
+    }
+
+    void dfs(int node,
+             vector<vector<int>>& adj,
+             string& colors,
+             unordered_map<char,int>& mp,
+             int& ans) {
+
+        mp[colors[node]]++;
+
+        int mx = 0;
+
+        for (auto &it : mp) {
+            mx = max(mx, it.second);
+        }
+
+        ans = max(ans, mx);
+
+        for (int nei : adj[node]) {
+            dfs(nei, adj, colors, mp, ans);
+        }
+
+        mp[colors[node]]--;
+    }
+
+    int largestPathValue(string colors, vector<vector<int>>& edges) {
+
+        int n = colors.size();
+
+        vector<vector<int>> adj(n);
+
+        for (auto &e : edges) {
+            adj[e[0]].push_back(e[1]);
+        }
+
+        // cycle detection
+        vector<int> vis(n, 0), pathVis(n, 0);
+
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                if (hasCycle(i, adj, vis, pathVis))
+                    return -1;
+            }
+        }
+
+        int ans = 0;
+
+        // try all starting nodes
+        for (int i = 0; i < n; i++) {
+
+            unordered_map<char,int> mp;
+
+            dfs(i, adj, colors, mp, ans);
+        }
+
+        return ans;
+    }
+};
+
 //  dp solution 
 
 class Solution {
