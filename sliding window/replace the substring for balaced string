@@ -1,0 +1,73 @@
+url  ------->>> https://leetcode.com/problems/replace-the-substring-for-balanced-string/description/?utm_source=chatgpt.com
+
+class Solution {
+public:
+    int balancedString(string s) {
+
+        int n = s.size();
+        int required = n / 4;
+
+        unordered_map<char, int> freq;
+
+        // Calculate frequency of every character
+        for (char ch : s)
+            freq[ch]++;
+
+        // Store only the excess frequencies
+        unordered_map<char, int> need;
+
+        for (auto it : freq) {
+            if (it.second > required)
+                need[it.first] = it.second - required;
+        }
+
+        // Already balanced
+        if (need.empty())
+            return 0;
+
+        unordered_map<char, int> window;
+
+        int i = 0;
+        int ans = n;
+
+        for (int j = 0; j < n; j++) {
+
+            // Expand window
+            if (need.count(s[j]))
+                window[s[j]]++;
+
+            // Check whether current window satisfies all required frequencies
+            bool ok = true;
+            for (auto it : need) {
+                if (window[it.first] < it.second) {
+                    ok = false;
+                    break;
+                }
+            }
+
+            // Shrink as much as possible
+            while (ok) {
+
+                ans = min(ans, j - i + 1);
+
+                if (need.count(s[i]))
+                    window[s[i]]--;
+
+                i++;
+
+                // Check again after shrinking
+                ok = true;
+                for (auto it : need) {
+                    if (window[it.first] < it.second) {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+
+            
+        }
+
+        return ans;
+    }
+};
