@@ -58,6 +58,7 @@ public:
 };
 
 //  disjoint set union  solution
+//  find is giving the ultimate parent of every node if ultimate parent of node is equal to node itself than it represents a particular group
 
 class Solution {
 public:
